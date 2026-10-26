@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: order-publisher
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        app: order-publisher
+      annotations:
+        dapr.io/enabled:  "true"
+        dapr.io/app-id:   "order-publisher"
+        dapr.io/config:   "tracing"
+        # El publisher no necesita dapr.io/app-port porque no recibe llamadas entrantes,
+        # solo hace llamadas salientes al sidecar local.
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: order-publisher
+          image: order-publisher:latest
+          imagePullPolicy: Never   # La imagen se carga localmente con `kind load`
+  backoffLimit: 0

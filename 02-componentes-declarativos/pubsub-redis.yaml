@@ -1,0 +1,17 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: order-pubsub
+  namespace: default
+spec:
+  type: pubsub.redis
+  version: v1
+  metadata:
+    # TODO 1: Completar el valor de redisHost con el DNS interno de Kubernetes.
+    # Formato: <nombre-del-service>.<namespace>.svc.cluster.local:<puerto>
+    # Pista: ejecuta `kubectl get svc -n redis` para ver el nombre del Service.
+    - name: redisHost
+      value: "redis-master.redis.svc.cluster.local:6379" # <-- COMPLETAR
+
+    - name: redisPassword
+      value: ""
